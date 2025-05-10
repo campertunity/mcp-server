@@ -11,7 +11,7 @@ export const placeDetailsTool = (server: McpServer, campertunityClient: Campertu
     },
     async ({ placeId }) => {
       try {
-        const place = await campertunityClient.get(`/place/${placeId}`);
+        const place = await campertunityClient.get(`/place/details?placeId=${placeId}`);
         return {
           content: [
             {

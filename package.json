@@ -1,6 +1,6 @@
 {
   "name": "campertunity-mcp-server",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "MCP Server for Campertunity - A Model Context Protocol server for interacting with camping and outdoor recreation data",
   "type": "module",
   "bin": {
