@@ -1,7 +1,7 @@
 {
   "name": "campertunity-mcp-server",
   "version": "0.0.1",
-  "description": "MCP Server for Campertunity",
+  "description": "MCP Server for Campertunity - A Model Context Protocol server for interacting with camping and outdoor recreation data",
   "type": "module",
   "bin": {
     "mcp-campertunity-server": "dist/index.js"
@@ -12,8 +12,28 @@
   "scripts": {
     "build": "tsc && shx chmod +x dist/*.js",
     "prepare": "npm run build",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
   },
+  "keywords": [
+    "mcp",
+    "campertunity",
+    "camping",
+    "outdoor",
+    "recreation",
+    "ai",
+    "model-context-protocol"
+  ],
+  "author": "Campertunity",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/campertunity/mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/campertunity/mcp-server/issues"
+  },
+  "homepage": "https://campertunity.com",
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.7.0",
     "@types/node": "^22"
@@ -22,5 +42,8 @@
     "@types/node": "^22",
     "shx": "^0.3.4",
     "typescript": "^5.8.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
