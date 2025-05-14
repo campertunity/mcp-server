@@ -7,7 +7,7 @@ This server implements the Model Context Protocol (MCP) for Campertunity, provid
 ```
 {
   "mcpServers": {
-    "campertunity-mcp-server": {
+    "campground-search-mcp-server": {
       "command": "npx",
       "args": ["-y", "campertunity-mcp-server"],
       "env": {
