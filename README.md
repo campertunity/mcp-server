@@ -1,5 +1,7 @@
 # MCP Server for Campertunity
 
+[![smithery badge](https://smithery.ai/badge/@campertunity/mcp-server)](https://smithery.ai/server/@campertunity/mcp-server)
+
 This server implements the Model Context Protocol (MCP) for Campertunity, providing AI models with tools to interact with camping and outdoor recreation data.
 
 ## MCP Client Config
@@ -17,7 +19,6 @@ This server implements the Model Context Protocol (MCP) for Campertunity, provid
   }
 }
 ```
-
 
 ## Setup
 
