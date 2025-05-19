@@ -1,4 +1,4 @@
-const CAMPERTUNITY_API_URL = process.env.CAMPERTUNITY_API_URL || "https://us-central1-my-project-1517611279378.cloudfunctions.net/public/api";
+const CAMPERTUNITY_API_URL = process.env.CAMPERTUNITY_API_URL || "https://campertunity.com/public/api";
 const CAMPERTUNITY_API_KEY = process.env.CAMPERTUNITY_API_KEY;
 
 if (!CAMPERTUNITY_API_KEY) {
