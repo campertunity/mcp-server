@@ -11,10 +11,6 @@ startCommand:
       campertunityApiKey:
         type: string
         description: API key for Campertunity authentication
-      campertunityApiUrl:
-        type: string
-        default: https://us-central1-my-project-1517611279378.cloudfunctions.net/public/api
-        description: Optional custom Campertunity API URL
   commandFunction:
     # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
     |-
@@ -22,10 +18,8 @@ startCommand:
       command: 'node',
       args: ['dist/index.js'],
       env: {
-        CAMPERTUNITY_API_KEY: config.campertunityApiKey,
-        ...(config.campertunityApiUrl ? { CAMPERTUNITY_API_URL: config.campertunityApiUrl } : {})
+        CAMPERTUNITY_API_KEY: config.campertunityApiKey
       }
     })
   exampleConfig:
     campertunityApiKey: YOUR_API_KEY_HERE
-    campertunityApiUrl: https://us-central1-my-project-1517611279378.cloudfunctions.net/public/api
