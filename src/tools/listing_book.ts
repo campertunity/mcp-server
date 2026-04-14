@@ -1,28 +1,28 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { CampertunityClient } from '../campertunity/client.js';
 
-export const placeBookTool = (server: McpServer, campertunityClient: CampertunityClient) => {
+export const listingBookTool = (server: McpServer, campertunityClient: CampertunityClient) => {
   server.tool(
-    'place-book',
+    'listing-book',
+    'Get a booking URL for a campground or recreation site',
     {
-      placeId: z.string().describe('The id of the place to book.'),
+      listingId: z.string().describe('The id of the listing to book.'),
       startDate: z.string().optional().describe('The start date of the booking. Format: YYYY-MM-DD'),
       endDate: z.string().optional().describe('The end date of the booking. Format: YYYY-MM-DD'),
       adults: z.number().default(1).describe('Number of adults. Default is 1.'),
       children: z.number().default(0).describe('Number of children. Default is 0.'),
     },
-    async ({ placeId, startDate, endDate, adults, children }) => {
+    async ({ listingId, startDate, endDate, adults, children }) => {
       try {
-        const availability = await campertunityClient.post(`/place/book`, {
-          placeId,
+        const result = await campertunityClient.post(`/listings/campgrounds/${encodeURIComponent(listingId)}/book`, {
           startDate,
           endDate,
           adults,
           children,
         });
         return {
-          content: [{ type: 'text', text: JSON.stringify(availability), mimeType: 'application/json' }],
+          content: [{ type: 'text', text: JSON.stringify(result), mimeType: 'application/json' }],
         };
       } catch (error) {
         return {

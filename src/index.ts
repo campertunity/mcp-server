@@ -2,10 +2,10 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CampertunityClient } from "./campertunity/client.js";
-import { placeAvailabilityTool } from "./tools/place_availability.js";
-import { placeBookTool } from "./tools/place_book.js";
-import { placeDetailsTool } from "./tools/place_details.js";
-import { placeSearchTool } from "./tools/place_search.js";
+import { listingAvailabilityTool } from "./tools/listing_availability.js";
+import { listingBookTool } from "./tools/listing_book.js";
+import { listingDetailsTool } from "./tools/listing_details.js";
+import { listingSearchTool } from "./tools/listing_search.js";
 
 const campertunityClient = new CampertunityClient();
 const server = new McpServer(
@@ -20,10 +20,10 @@ const server = new McpServer(
   }
 );
 
-placeAvailabilityTool(server, campertunityClient);
-placeBookTool(server, campertunityClient);
-placeDetailsTool(server, campertunityClient);
-placeSearchTool(server, campertunityClient);
+listingAvailabilityTool(server, campertunityClient);
+listingBookTool(server, campertunityClient);
+listingDetailsTool(server, campertunityClient);
+listingSearchTool(server, campertunityClient);
 
 
 async function runServer() {

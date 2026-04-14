@@ -2,19 +2,19 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { CampertunityClient } from '../campertunity/client.js';
 
-export const placeAvailabilityTool = (server: McpServer, campertunityClient: CampertunityClient) => {
+export const listingAvailabilityTool = (server: McpServer, campertunityClient: CampertunityClient) => {
   server.tool(
-    'place-availability',
+    'listing-availability',
+    'Check availability for specific campsites at a listing',
     {
-      placeId: z.string().describe('The id of the place to check availability for.'),
+      listingId: z.string().describe('The id of the listing to check availability for.'),
       siteIds: z.array(z.string()).optional().describe('The ids of the sites to check availability for.'),
       startDate: z.string().describe('The start date to check availability for. Format: YYYY-MM-DD'),
       endDate: z.string().describe('The end date to check availability for. Format: YYYY-MM-DD'),
     },
-    async ({ placeId, siteIds, startDate, endDate }) => {
+    async ({ listingId, siteIds, startDate, endDate }) => {
       try {
-        const availability = await campertunityClient.post(`/place/availability`, {
-          placeId,
+        const availability = await campertunityClient.post(`/listings/campgrounds/${encodeURIComponent(listingId)}/availability`, {
           siteIds,
           startDate,
           endDate,

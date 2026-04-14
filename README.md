@@ -11,6 +11,21 @@ This server implements the Model Context Protocol (MCP) for Campertunity, provid
   "mcpServers": {
     "campground-search-mcp-server": {
       "command": "npx",
+      "args": ["-y", "campertunity-mcp-server@latest"]
+    }
+  }
+}
+```
+
+## Setup
+
+No API key is required to get started. To get higher rate limits, get an API key from [https://campertunity.com/mcp](https://campertunity.com/mcp) and set it as an environment variable:
+
+```
+{
+  "mcpServers": {
+    "campground-search-mcp-server": {
+      "command": "npx",
       "args": ["-y", "campertunity-mcp-server@latest"],
       "env": {
         "CAMPERTUNITY_API_KEY": "your_api_key_here"
@@ -20,20 +35,13 @@ This server implements the Model Context Protocol (MCP) for Campertunity, provid
 }
 ```
 
-## Setup
-
-1. Get your API key from [https://campertunity.com/mcp](https://campertunity.com/mcp)
-2. Set the environment variable:
-   ```
-   CAMPERTUNITY_API_KEY=your_api_key_here
-   ```
-
 ## Available Tools
 
-### place-search
-Search for camping places with various filters and criteria.
+### listing-search
+Search for camping listings with various filters and criteria, or browse all listings with cursor pagination.
 - **Parameters:**
   - `limit`: Number of results (default: 50, max: 1000)
+  - `cursor`: Pagination cursor from a previous response (for browsing without search params)
   - `startDate`: Start date for availability (YYYY-MM-DD)
   - `endDate`: End date for availability (YYYY-MM-DD)
   - `adults`: Number of adults (default: 1)
@@ -41,26 +49,30 @@ Search for camping places with various filters and criteria.
   - `latitude`: Center point latitude
   - `longitude`: Center point longitude
   - `radius`: Search radius in kilometers (default: 20)
+  - `region`: Region/state to search in (geocoded if lat/lng not provided)
+  - `city`: City to search in (geocoded if lat/lng not provided)
+  - `country`: Country to search in (geocoded if lat/lng not provided)
+  - `countryCode`: Country code to search in, e.g. "US", "CA" (geocoded if lat/lng not provided)
   - `filters`: Array of tags to filter by (see Tag enum below)
   - `campgroundDescription`: Natural language description of desired campground features
 
-### place-details
-Get detailed information about a specific camping place.
+### listing-details
+Get detailed information about a specific listing.
 - **Parameters:**
-  - `placeId`: ID of the place to get details for
+  - `listingId`: ID of the listing to get details for
 
-### place-availability
-Check availability of camping sites at a specific place.
+### listing-availability
+Check availability of camping sites at a specific listing.
 - **Parameters:**
-  - `placeId`: ID of the place to check
+  - `listingId`: ID of the listing to check
   - `siteIds`: Optional array of specific site IDs to check
   - `startDate`: Start date (YYYY-MM-DD)
   - `endDate`: End date (YYYY-MM-DD)
 
-### place-book
-Book a camping site.
+### listing-book
+Get a booking URL for a listing.
 - **Parameters:**
-  - `placeId`: ID of the place to book
+  - `listingId`: ID of the listing to book
   - `startDate`: Start date (YYYY-MM-DD)
   - `endDate`: End date (YYYY-MM-DD)
   - `adults`: Number of adults (default: 1)

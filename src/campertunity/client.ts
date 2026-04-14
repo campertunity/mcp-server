@@ -1,17 +1,19 @@
 const CAMPERTUNITY_API_URL = process.env.CAMPERTUNITY_API_URL || "https://campertunity.com/public/api";
 const CAMPERTUNITY_API_KEY = process.env.CAMPERTUNITY_API_KEY;
 
-if (!CAMPERTUNITY_API_KEY) {
-  throw new Error("CAMPERTUNITY_API_KEY environment variable is required");
-}
-
 export class CampertunityClient {
+  private get headers(): Record<string, string> {
+    const h: Record<string, string> = {};
+    if (CAMPERTUNITY_API_KEY) {
+      h["Authorization"] = `Bearer ${CAMPERTUNITY_API_KEY}`;
+    }
+    return h;
+  }
+
   async get(path: string) {
     const response = await fetch(`${CAMPERTUNITY_API_URL}${path}`, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${CAMPERTUNITY_API_KEY}`,
-      },
+      headers: this.headers,
     });
 
     if (!response.ok) {
@@ -25,7 +27,7 @@ export class CampertunityClient {
     const response = await fetch(`${CAMPERTUNITY_API_URL}${path}`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${CAMPERTUNITY_API_KEY}`,
+        ...this.headers,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),

@@ -2,21 +2,21 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import { CampertunityClient } from '../campertunity/client.js';
 
-// NOTE: This is a tool since tools are more supported by the MCP protocol
-export const placeDetailsTool = (server: McpServer, campertunityClient: CampertunityClient) => {
+export const listingDetailsTool = (server: McpServer, campertunityClient: CampertunityClient) => {
   server.tool(
-    'place-details',
+    'listing-details',
+    'Get detailed information about a specific listing',
     {
-      placeId: z.string().describe('The id of the place to get details for.'),
+      listingId: z.string().describe('The id of the listing to get details for.'),
     },
-    async ({ placeId }) => {
+    async ({ listingId }) => {
       try {
-        const place = await campertunityClient.get(`/place/details?placeId=${placeId}`);
+        const listing = await campertunityClient.get(`/listings/campgrounds/${encodeURIComponent(listingId)}`);
         return {
           content: [
             {
               type: 'text',
-              text: JSON.stringify(place),
+              text: JSON.stringify(listing),
               mimeType: 'application/json',
             },
           ],
