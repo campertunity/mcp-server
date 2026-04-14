@@ -1,13 +1,15 @@
 {
-  "name": "campertunity-mcp-server",
+  "name": "campertunity-ai-tools",
   "version": "0.1.0",
-  "description": "MCP Server for Campertunity - A Model Context Protocol server for interacting with camping and outdoor recreation data",
-  "type": "module",
+  "description": "AI tools for Campertunity - MCP server, skill files, and backend interfaces for campground search and booking",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "bin": {
-    "mcp-campertunity-server": "dist/index.js"
+    "campertunity-ai-tools": "dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "skills"
   ],
   "scripts": {
     "build": "tsc && shx chmod +x dist/*.js",
@@ -22,7 +24,10 @@
     "outdoor",
     "recreation",
     "ai",
-    "model-context-protocol"
+    "model-context-protocol",
+    "skills",
+    "openclaw",
+    "agent-tools"
   ],
   "author": "Campertunity",
   "license": "MIT",

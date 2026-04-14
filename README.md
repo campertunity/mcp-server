@@ -1,32 +1,48 @@
-# MCP Server for Campertunity
+# Campertunity AI Tools
 
-[![smithery badge](https://smithery.ai/badge/@campertunity/mcp-server)](https://smithery.ai/server/@campertunity/mcp-server)
+AI tools to search for campgrounds, check availability and book campsites across the entire world.
 
-This server implements the Model Context Protocol (MCP) for Campertunity, providing AI models with tools to interact with camping and outdoor recreation data.
+Includes **agent skill files** and an **MCP server** for AI-powered campground discovery.
 
-## MCP Client Config
+## Agent Skill Files
 
+This package includes skill files compatible with [OpenClaw](https://openclawlab.com), [Claude Code](https://claude.ai/claude-code), [Codex](https://openai.com/codex), and other agent platforms that support the SKILL.md format.
+
+Install the skill:
+
+```bash
+# OpenClaw
+openclaw skills install campertunity
+
+# Claude Code / other platforms
+# Copy skills/campertunity/SKILL.md to your workspace skills directory
 ```
+
+## MCP Server
+
+### Quick Start
+
+```json
 {
   "mcpServers": {
-    "campground-search-mcp-server": {
+    "campertunity": {
       "command": "npx",
-      "args": ["-y", "campertunity-mcp-server@latest"]
+      "args": ["-y", "campertunity-ai-tools@latest"]
     }
   }
 }
 ```
 
-## Setup
+### API Key (optional)
 
-No API key is required to get started. To get higher rate limits, get an API key from [https://campertunity.com/mcp](https://campertunity.com/mcp) and set it as an environment variable:
+No API key is required. For higher rate limits, get a key from [campertunity.com/mcp](https://campertunity.com/mcp):
 
-```
+```json
 {
   "mcpServers": {
-    "campground-search-mcp-server": {
+    "campertunity": {
       "command": "npx",
-      "args": ["-y", "campertunity-mcp-server@latest"],
+      "args": ["-y", "campertunity-ai-tools@latest"],
       "env": {
         "CAMPERTUNITY_API_KEY": "your_api_key_here"
       }
@@ -38,107 +54,72 @@ No API key is required to get started. To get higher rate limits, get an API key
 ## Available Tools
 
 ### listing-search
-Search for camping listings with various filters and criteria, or browse all listings with cursor pagination.
-- **Parameters:**
-  - `limit`: Number of results (default: 50, max: 1000)
-  - `cursor`: Pagination cursor from a previous response (for browsing without search params)
-  - `startDate`: Start date for availability (YYYY-MM-DD)
-  - `endDate`: End date for availability (YYYY-MM-DD)
-  - `adults`: Number of adults (default: 1)
-  - `children`: Number of children (default: 0)
-  - `latitude`: Center point latitude
-  - `longitude`: Center point longitude
-  - `radius`: Search radius in kilometers (default: 20)
-  - `region`: Region/state to search in (geocoded if lat/lng not provided)
-  - `city`: City to search in (geocoded if lat/lng not provided)
-  - `country`: Country to search in (geocoded if lat/lng not provided)
-  - `countryCode`: Country code to search in, e.g. "US", "CA" (geocoded if lat/lng not provided)
-  - `filters`: Array of tags to filter by (see Tag enum below)
-  - `campgroundDescription`: Natural language description of desired campground features
+
+Search for campgrounds with filters and location-based search.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `limit` | number | Results to return (default: 50, max: 1000) |
+| `cursor` | string | Pagination cursor from previous response |
+| `startDate` | string | Availability start date (YYYY-MM-DD) |
+| `endDate` | string | Availability end date (YYYY-MM-DD) |
+| `adults` | number | Number of adults (default: 1) |
+| `children` | number | Number of children (default: 0) |
+| `latitude` | number | Center point latitude |
+| `longitude` | number | Center point longitude |
+| `radius` | number | Search radius in km (default: 20) |
+| `region` | string | Region/state (geocoded if no lat/lng) |
+| `city` | string | City (geocoded if no lat/lng) |
+| `country` | string | Country (geocoded if no lat/lng) |
+| `countryCode` | string | Country code, e.g. "US", "CA" |
+| `filters` | string[] | Tags to filter by (see below) |
+| `campgroundDescription` | string | Natural language description |
 
 ### listing-details
+
 Get detailed information about a specific listing.
-- **Parameters:**
-  - `listingId`: ID of the listing to get details for
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `listingId` | string | ID of the listing |
 
 ### listing-availability
-Check availability of camping sites at a specific listing.
-- **Parameters:**
-  - `listingId`: ID of the listing to check
-  - `siteIds`: Optional array of specific site IDs to check
-  - `startDate`: Start date (YYYY-MM-DD)
-  - `endDate`: End date (YYYY-MM-DD)
+
+Check campsite availability for specific dates.
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `listingId` | string | ID of the listing |
+| `siteIds` | string[] | Optional specific site IDs |
+| `startDate` | string | Start date (YYYY-MM-DD) |
+| `endDate` | string | End date (YYYY-MM-DD) |
 
 ### listing-book
-Get a booking URL for a listing.
-- **Parameters:**
-  - `listingId`: ID of the listing to book
-  - `startDate`: Start date (YYYY-MM-DD)
-  - `endDate`: End date (YYYY-MM-DD)
-  - `adults`: Number of adults (default: 1)
-  - `children`: Number of children (default: 0)
 
-## Available Tags for Filtering
+Get a booking URL for a campground.
 
-### Site Types
-- tent
-- rv
-- lodging
-- glamping
-- cabin
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `listingId` | string | ID of the listing |
+| `startDate` | string | Start date (YYYY-MM-DD) |
+| `endDate` | string | End date (YYYY-MM-DD) |
+| `adults` | number | Number of adults (default: 1) |
+| `children` | number | Number of children (default: 0) |
 
-### Access Types
-- driveIn
-- walkIn
-- equestrian
-- boat
+## Filter Tags
 
-### Activities
-- biking
-- boating
-- fishing
-- hiking
-- horsebackRiding
-- paddling
-- windSports
-- surfing
-- swimming
-- whitewaterPaddling
-- wildlifeWatching
+**Site Types:** tent, rv, lodging, glamping, cabin
 
-### Amenities
-- picnicTable
-- fires
-- toilets
-- outhouse
-- potableWater
-- petFriendly
-- rvHookup
-- rvSanitation
-- trash
-- showers
-- wifi
-- handicap
+**Access:** driveIn, walkIn, equestrian, boat
 
-### Terrain
-- beach
-- cave
-- desert
-- forest
-- hotSpring
-- lake
-- river
-- swimmingHole
-- waterfall
-- creek
+**Activities:** biking, boating, fishing, hiking, horsebackRiding, paddling, windSports, surfing, swimming, whitewaterPaddling, wildlifeWatching
 
-## Important Notice
+**Amenities:** picnicTable, fires, toilets, outhouse, potableWater, petFriendly, rvHookup, rvSanitation, trash, showers, wifi, handicap
 
-The data provided through these tools is collected from multiple sources and enhanced with AI. To ensure data accuracy and respect intellectual property rights:
+**Terrain:** beach, cave, desert, forest, hotSpring, lake, river, swimmingHole, waterfall, creek
 
-- Do not redistribute the data
-- Do not save or cache the data
-- Do not modify the data
-- Always use real-time data through the server
+## Data Notice
 
-For more information, visit [campertunity.com](https://campertunity.com)
+Data is collected from multiple sources and enhanced with AI. Do not redistribute, cache, or modify the data. Always use real-time data through the server.
+
+For more information, visit [campertunity.com](https://campertunity.com).
