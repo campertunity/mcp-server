@@ -10,7 +10,35 @@ When the user wants to find campgrounds, check campsite availability, or book ca
 
 ## Setup
 
-Add the MCP server to your config:
+This skill calls tools provided by the Campertunity MCP server. The MCP server must be configured in the host (e.g. OpenClaw, Claude Desktop, Cursor) — the skill itself only tells the agent *when* and *how* to call the tools.
+
+**Hosted (recommended)** — no install, just point your client at the hosted endpoint:
+
+```json
+{
+  "mcpServers": {
+    "campertunity": {
+      "url": "https://campertunity.com/mcp-server",
+      "transport": "http"
+    }
+  }
+}
+```
+
+For stdio-only clients, bridge via `mcp-remote`:
+
+```json
+{
+  "mcpServers": {
+    "campertunity": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://campertunity.com/mcp-server"]
+    }
+  }
+}
+```
+
+**Local (stdio)** — run the server locally via npx:
 
 ```json
 {
